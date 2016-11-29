@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.subject.course.mapper.ClassTimeMapper">
+	<resultMap type="com.szu.subject.domains.ClassTime" id="ClassTime">
+		<id property="id" column="ID" jdbcType="INTEGER" />
+		<result property="dayOfWeek" column="DAY" jdbcType="TINYINT" />
+		<result property="section" column="SECTION" jdbcType="TINYINT" />
+		<result property="type" column="TYPE" jdbcType="TINYINT" />
+	</resultMap>
+	<sql id="Tab">
+		C_TIME
+	</sql>
+
+	<sql id="Col">
+		DAY,SECTION,TYPE
+	</sql>
+	<select id="getClassTimeByPK" resultMap="ClassTime">
+		select * from
+		<include refid="Tab" />
+		where ID=#{id}
+	</select>
+
+	<select id="getClassTimeByDay" resultMap="ClassTime">
+		select * from
+		<include refid="Tab" />
+		where DAY=#{day}
+	</select>
+
+	<select id="getClassTimeBySection" resultMap="ClassTime">
+		select * from
+		<include refid="Tab" />
+		where SECTION=#{section}
+	</select>
+
+	<select id="getClassTimeByType" resultMap="ClassTime">
+		select * from
+		<include refid="Tab" />
+		where TYPE=#{type}
+	</select>
+	
+	<select id="getAllClassTime" resultMap="ClassTime">
+		select * from
+		<include refid="Tab" />
+	</select>
+
+	<insert id="createClassTime" parameterType="com.szu.subject.domains.ClassTime"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+		insert into
+		<include refid="Tab" />
+		(
+		<include refid="Col" />
+		)
+		values(
+		#{dayOfWeek,jdbcType=TINYINT},
+		#{section,jdbcType=TINYINT},
+		#{type,jdbcType=TINYINT}
+		)
+	</insert>
+
+	<update id="updateClassTime" parameterType="com.szu.subject.domains.ClassTime">
+		update
+		<include refid="Tab" />
+		<set>
+			DAY=#{dayOfWeek,jdbcType=TINYINT},
+			SECTION=#{section,jdbcType=TINYINT},
+			TYPE=#{type,jdbcType=TINYINT}
+		</set>
+		where ID=#{id}
+	</update>
+
+	<delete id="deleteClassTime">
+		delete from
+		<include refid="Tab" />
+		where ID=#{id}
+	</delete>
+</mapper>
